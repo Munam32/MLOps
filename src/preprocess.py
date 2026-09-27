@@ -12,7 +12,8 @@ PROCESSED_DIR = ROOT_DIR / "data" / "processed"
 
 
 def main():
-    params = yaml.safe_load(open(ROOT_DIR / "params.yaml"))["preprocess"]
+    with open(ROOT_DIR / "params.yaml", encoding="utf-8") as f:
+        params = yaml.safe_load(f)["preprocess"]
 
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 

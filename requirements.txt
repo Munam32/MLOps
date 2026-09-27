@@ -1,0 +1,6 @@
+tensorflow
+dvc
+pyyaml
+scikit-learn
+matplotlib
+numpy

@@ -1,9 +1,8 @@
 """Download Fashion-MNIST and save raw arrays to data/raw/."""
 
 from pathlib import Path
-
 import numpy as np
-from tensorflow import keras
+import keras
 
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 

@@ -2,5 +2,4 @@
 __pycache__/
 .dvc/cache/
 *.h5
-data/
-models/
+/models

@@ -20,12 +20,13 @@ def main():
     train_raw = np.load(RAW_DIR / "train.npz")
     test_raw = np.load(RAW_DIR / "test.npz")
 
-    train_images = train_raw["images"].astype("float32") / 255.0
+    # Scale pixels from [0, 255] to [-1, 1] so inputs are centred on zero
+    train_images = train_raw["images"].astype("float32") / 127.5 - 1.0
     train_labels = train_raw["labels"]
-    test_images = test_raw["images"].astype("float32") / 255.0
+    test_images = test_raw["images"].astype("float32") / 127.5 - 1.0
     test_labels = test_raw["labels"]
 
-    assert 0.0 <= train_images.min() and train_images.max() <= 1.0, "pixels not in [0, 1]"
+    assert -1.0 <= train_images.min() and train_images.max() <= 1.0, "pixels not in [-1, 1]"
 
     train_images, val_images, train_labels, val_labels = train_test_split(
         train_images,

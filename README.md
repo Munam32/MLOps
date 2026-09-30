@@ -10,7 +10,7 @@ versioned end to end with Git and DVC.
 | `src/prepare.py` | Raw train/test arrays in `data/raw/` |
 | `src/preprocess.py` | Normalized train/val/test arrays in `data/processed/` |
 | `src/train.py` | `models/model.h5` and `models/history.csv` |
-| `src/evaluate.py` | `metrics.json` and the confusion matrix plot |
+| `src/evaluate.py` | `metrics.json` and `reports/confusion_matrix.png` |
 
 Hyperparameters live in `params.yaml`.
 

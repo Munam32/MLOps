@@ -16,6 +16,7 @@ matplotlib.use("Agg")
 ROOT_DIR = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = ROOT_DIR / "data" / "processed"
 MODELS_DIR = ROOT_DIR / "models"
+REPORTS_DIR = ROOT_DIR / "reports"
 
 CLASS_NAMES = [
     "T-shirt/top",
@@ -47,7 +48,8 @@ def main():
     )
     ax.set_title(f"Fashion-MNIST test set (accuracy {test_accuracy:.2%})")
     fig.tight_layout()
-    fig.savefig(ROOT_DIR / "confusion_matrix.png", dpi=120)
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(REPORTS_DIR / "confusion_matrix.png", dpi=120)
     plt.close(fig)
 
     metrics = {"test_loss": float(test_loss), "test_accuracy": float(test_accuracy)}
@@ -55,7 +57,7 @@ def main():
         json.dump(metrics, f, indent=2)
 
     print(f"Test loss: {test_loss:.4f}, test accuracy: {test_accuracy:.4f}")
-    print(f"Saved metrics.json and confusion_matrix.png to {ROOT_DIR}")
+    print(f"Saved metrics.json to {ROOT_DIR} and confusion_matrix.png to {REPORTS_DIR}")
 
 
 if __name__ == "__main__":

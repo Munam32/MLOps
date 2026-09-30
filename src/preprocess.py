@@ -20,15 +20,24 @@ def main():
     train_raw = np.load(RAW_DIR / "train.npz")
     test_raw = np.load(RAW_DIR / "test.npz")
 
-    # Standardize with the training set's mean and std (z-score)
     train_images = train_raw["images"].astype("float32")
-    mean, std = train_images.mean(), train_images.std()
-    train_images = (train_images - mean) / std
     train_labels = train_raw["labels"]
-    test_images = (test_raw["images"].astype("float32") - mean) / std
+    test_images = test_raw["images"].astype("float32")
     test_labels = test_raw["labels"]
 
-    assert abs(train_images.mean()) < 1e-3, "training pixels not centred on 0"
+    if params["normalization"] == "minus_one_one":
+        # Scale pixels from [0, 255] to [-1, 1] so inputs are centred on zero
+        train_images = train_images / 127.5 - 1.0
+        test_images = test_images / 127.5 - 1.0
+        assert -1.0 <= train_images.min() and train_images.max() <= 1.0, "pixels not in [-1, 1]"
+    elif params["normalization"] == "zscore":
+        # Standardize with the training set's mean and std
+        mean, std = train_images.mean(), train_images.std()
+        train_images = (train_images - mean) / std
+        test_images = (test_images - mean) / std
+        assert abs(train_images.mean()) < 1e-3, "training pixels not centred on 0"
+    else:
+        raise ValueError(f"unknown normalization: {params['normalization']}")
 
     train_images, val_images, train_labels, val_labels = train_test_split(
         train_images,

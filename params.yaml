@@ -1,6 +1,7 @@
 preprocess:
   val_size: 0.1
   seed: 42
+  normalization: minus_one_one  # or zscore
 
 train:
   dense_units: 256

@@ -20,12 +20,15 @@ def main():
     train_raw = np.load(RAW_DIR / "train.npz")
     test_raw = np.load(RAW_DIR / "test.npz")
 
-    train_images = train_raw["images"].astype("float32") / 255.0
+    # Standardize with the training set's mean and std (z-score)
+    train_images = train_raw["images"].astype("float32")
+    mean, std = train_images.mean(), train_images.std()
+    train_images = (train_images - mean) / std
     train_labels = train_raw["labels"]
-    test_images = test_raw["images"].astype("float32") / 255.0
+    test_images = (test_raw["images"].astype("float32") - mean) / std
     test_labels = test_raw["labels"]
 
-    assert 0.0 <= train_images.min() and train_images.max() <= 1.0, "pixels not in [0, 1]"
+    assert abs(train_images.mean()) < 1e-3, "training pixels not centred on 0"
 
     train_images, val_images, train_labels, val_labels = train_test_split(
         train_images,

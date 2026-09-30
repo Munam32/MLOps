@@ -25,6 +25,8 @@ def main():
     test_images = test_raw["images"].astype("float32") / 255.0
     test_labels = test_raw["labels"]
 
+    assert 0.0 <= train_images.min() and train_images.max() <= 1.0, "pixels not in [0, 1]"
+
     train_images, val_images, train_labels, val_labels = train_test_split(
         train_images,
         train_labels,

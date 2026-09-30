@@ -1,7 +1,15 @@
-tensorflow
-dvc
-pyyaml
-scikit-learn
-matplotlib
-numpy
-pandas
+# Versions tested together on Python 3.13.
+#
+# After installing, run this once:
+#   pip install --no-deps "pyOpenSSL==26.4.0"
+# dvc-gdrive (via PyDrive2) pins pyOpenSSL<=24.2.1, but those versions crash with the
+# cryptography release that dvc needs ("module 'lib' has no attribute 'GEN_EMAIL'").
+# pip cannot override a dependency's pin from this file, so the upgrade is a separate step.
+
+tensorflow==2.21.0
+dvc[gdrive]==3.67.1
+pyyaml==6.0.3
+scikit-learn==1.9.1
+matplotlib==3.11.2
+numpy==2.5.3
+pandas==3.0.6
